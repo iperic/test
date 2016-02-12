@@ -1,10 +1,10 @@
 <?php
 
-define('ITEM_A', 2);
-define('ITEM_B', 3);
-define('ITEM_C', 1);
-define('ITEM_D', 0);
-define('ITEM_E', 0);
+define('ITEM_A', 150);
+define('ITEM_B', 150);
+define('ITEM_C', 100);
+define('ITEM_D', 100);
+define('ITEM_E', 200);
 
 /**
  * base class to keep track of Inventoy.
