@@ -2,8 +2,10 @@
 
  <?php
 
-  include 'Inventory.inc';
-  include 'Orders.inc';
+function __autoload($classname) {
+    $filename = "./". $classname .".inc";
+    include_once($filename);
+}
 
 /**
  * TEST DATA
