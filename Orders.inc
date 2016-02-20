@@ -1,8 +1,8 @@
 <?php
 
 /**
- * base order class to keep track processed data.
- * used as output repository
+ * base Order class.
+ * 
  */
 class Orders {
   private $orders = array();
@@ -21,8 +21,8 @@ class Orders {
   }
 
   //in form of output create each line and filled it with 0
-  private function initiateNewLine() {
-    $zero_array = array('A'=> 0, 'B'=> 0, 'C'=> 0, 'D'=> 0, 'E'=> 0);
+  private function initiateNewLine($zero_array) {
+    $zero_array = self::getZeroList();  
     return array('headerId' => 0, 
       'data' => array('order' => $zero_array,
       'allocated' => $zero_array,
@@ -34,7 +34,12 @@ class Orders {
     echo json_encode($this->orders);
   }
   
-  private function __toString(){
+  /**
+   * magic method __toString()
+   * 
+   * @return string
+   */
+  public function __toString(){
     foreach($this->orders as $key => $value) {
        $ord =  array_values($value['data']['order']);
        $alloc = array_values($value['data']['allocated']);
@@ -42,6 +47,14 @@ class Orders {
        $return_str .= $value['headerId'] . ': ' . implode(',', $ord) . ' :: ' . implode(',', $alloc) . ' :: ' . implode(',', $back) . "\r\n";
     }
     return $return_str;
+  }
+  
+   /**
+   * 
+   * @return array
+   */
+  public static function getZeroList() {
+     return array('A'=> 0, 'B'=> 0, 'C'=> 0, 'D'=> 0, 'E'=> 0);
   }
 }
 ?>
