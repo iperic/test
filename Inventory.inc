@@ -7,55 +7,66 @@ define('ITEM_D', 100);
 define('ITEM_E', 200);
 
 /**
- * base class to keep track of Inventoy.
- * using magic methods
- * the only custom method used for validation is getInventoryAmount
+ * 
+ * Base Inventory class.
  */
 class Inventory {
-
-  private $A;
-  private $B;
-  private $C;
-  private $D;
-  private $E;
   
-  public function __construct() {
-     $this->A = ITEM_A;
-     $this->B = ITEM_B;
-     $this->C = ITEM_C;
-     $this->D = ITEM_D;
-     $this->E = ITEM_E;
-  }
+  private $inventory;
   
-  public function __construct1($arga, $argb, $argc, $argd, $arge) {
-     $this->A = $arga;
-     $this->B = $argb;
-     $this->C = $argc;
-     $this->D = $argd;
-     $this->E = $arge;
+  // Constructor:
+  public function __construct() {     
+     $this->inventory = $this->getSplFixedArray();
+     $this->inventory = array('A' => ITEM_A,
+       'B' => ITEM_B,
+       'C' => ITEM_C,
+       'D' => ITEM_D,
+       'E' => ITEM_E);
   }
   
   public function __destruct() {
-    unset($this->A);
-    unset($this->B);
-    unset($this->C);
-    unset($this->D);
-    unset($this->E);
+    unset($this->inventory);
   } 
   
+  /**
+   * 
+   * @param string $propName
+   * @return int
+   */
   function __get($propName) {
     $vars = array('A', 'B', 'C', 'D', 'E');
     if (in_array($propName, $vars)) {
-      return $this->$propName;
+      return $this->inventory[$propName];
     }
   }
 
+  /**
+   * 
+   * @param string $propName
+   * @param int $propValue
+   */
   function __set($propName, $propValue) {
-    $this->$propName -= $propValue;
+    $this->inventory[$propName] -= $propValue;
   }
 
+  /**
+   * custom method to monitor integral state of inventory
+   * 
+   * @return int
+   */ 
   public function getInventoryAmount() {
-    return $this->A + $this->B + $this->C + $this->D + $this->E;
+    return $this->inventory['A'] + $this->inventory['B'] + $this->inventory['C'] + 
+      $this->inventory['D'] + $this->inventory['E'];
   }
+
+  /**
+   * custom method uses SplFixedArray
+   * 
+   * @return \SplFixedArray
+   */
+  private function getSplFixedArray() {
+    return new  SplFixedArray(INVENTORY_SIZE);
+  }
+
 }
 ?>
